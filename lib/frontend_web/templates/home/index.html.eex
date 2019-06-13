@@ -1,0 +1,13 @@
+<section>
+    <h1>Welcome to HelloWorld</h1>
+
+    <div class="container">
+        <%= for tours_chunk <- Enum.chunk_every(@tours, 3) do %>
+            <div class="card-deck mb-5">
+                <%= for tour <- tours_chunk do %>
+                    <%= render("tour_card.html", tour: tour) %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+</section>

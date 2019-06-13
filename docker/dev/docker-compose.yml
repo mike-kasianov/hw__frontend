@@ -1,0 +1,28 @@
+version: '3.4'
+services:
+  main:
+    container_name: ${DOCKER_CONTAINER}
+    hostname: ${PROJECT_NAME}
+    user: appuser
+    image: ${DOCKER_IMAGE}
+    build:
+      context: ""
+      dockerfile: Dockerfile.dev_server
+      # These variables are passed to Dockerfile.
+      args:
+        - HOST_UID=$HOST_UID
+        - HOST_GUID=${HOST_GUID}
+    ports:
+      - "4000:4000"
+    working_dir: /home/appuser/${PROJECT_NAME}
+    command: >
+      bash -c "mix deps.get
+      && mix deps.compile
+      && cd assets
+      && npm install
+      && node node_modules/webpack/bin/webpack.js --mode development
+      && cd ..
+      && mix phx.server"
+#    command: ["tail", "-f", "/dev/null"]
+    volumes:
+      - ${PWD:-.}:/home/appuser/${PROJECT_NAME}

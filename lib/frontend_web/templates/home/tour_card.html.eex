@@ -1,0 +1,10 @@
+<div class="card">
+    <a href="#">
+        <img src="<%= @tour.image_url %>" class="card-img-top" alt="Pic">
+    </a>
+    <div class="card-body">
+        <h5 class="card-title"><%= @tour.title %></h5>
+        <p class="card-text"><%= @tour.description %></p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+</div>
