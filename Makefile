@@ -32,7 +32,7 @@ rebuild:
 	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) build --no-cache $(DOCKER_COMPOSE_SERVICE)
 
 service:
-	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) up $(SERVICE_TARGET)
+	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) up $(DOCKER_COMPOSE_SERVICE)
 
 stop:
 	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) stop
@@ -47,4 +47,4 @@ ps:
 	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) ps
 
 test_inside_docker:
-	docker-compose $(TEST_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME)_test up $(SERVICE_TARGET)
+	docker-compose $(TEST_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME)_test up $(DOCKER_COMPOSE_SERVICE)
