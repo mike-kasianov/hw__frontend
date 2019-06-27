@@ -1,10 +1,9 @@
-FROM nontakenusername/erlang-elixir-node:0.1.0-d9f40f3
+FROM nontakenusername/erlang-elixir-node:0.3.0-5393cb8
 
 USER root
 
-RUN yum install -y epel-release \
-    && yum update -y \
-    && yum --enablerepo=epel -y install inotify-tools
+RUN apt-get update \
+    && apt-get install -y inotify-tools
 
 ARG HOST_UID=${HOST_UID}
 ARG HOST_GUID=${HOST_GUID}
@@ -14,5 +13,6 @@ RUN usermod -u ${HOST_UID} appuser \
     && groupmod -g ${HOST_GUID} appuser
 
 USER appuser
+ENV HOME /home/appuser
 
 CMD ["iex"]

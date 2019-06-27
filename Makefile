@@ -39,5 +39,8 @@ stop:
 login:
 	docker exec -it $(DOCKER_CONTAINER) /bin/bash
 
+login_as_root:
+	docker exec -u root -w / -it $(DOCKER_CONTAINER) /bin/bash
+
 ps:
 	docker-compose $(DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) ps

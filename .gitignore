@@ -44,3 +44,6 @@ hw__frontend.iml
 
 # macOS's files
 .DS_Store
+
+# ElixirLS data
+.elixir_ls
