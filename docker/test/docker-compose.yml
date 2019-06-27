@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  main:
+    container_name: ${DOCKER_CONTAINER}_test
+    hostname: ${PROJECT_NAME}
+    user: appuser
+    image: ${DOCKER_IMAGE}_test
+    build:
+      context: ""
+      dockerfile: Dockerfile
+      # These variables are passed to Dockerfile.
+      args:
+        - HOST_UID=$HOST_UID
+        - HOST_GUID=${HOST_GUID}
+    ports:
+      - "4001:4001"
+    working_dir: /home/appuser/${PROJECT_NAME}
+    command: >
+      bash -c "mix deps.get
+      && mix deps.compile
+      && cd assets
+      && npm install
+      && node node_modules/webpack/bin/webpack.js --mode development
+      && cd ..
+      && mix test"
+    volumes:
+      - ${PWD:-.}:/home/appuser/${PROJECT_NAME}

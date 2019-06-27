@@ -1,7 +1,8 @@
 PROJECT_NAME := frontend
 
-DOCKER_COMPOSE_PATH := ./docker/dev/docker-compose.yml
-DOCKER_COMPOSE_PATH_PARAMS = -f $(DOCKER_COMPOSE_PATH)
+DEV_DOCKER_COMPOSE_PATH_PARAMS = -f ./docker/dev/docker-compose.yml
+TEST_DOCKER_COMPOSE_PATH_PARAMS = -f ./docker/test/docker-compose.yml
+
 DOCKER_COMPOSE_SERVICE := main
 
 DOCKER_IMAGE := hello-world.$(PROJECT_NAME)_image
@@ -24,17 +25,17 @@ export DOCKER_CONTAINER
 .PHONY: build rebuild service stop login ps
 
 build:
-	docker-compose $(DOCKER_COMPOSE_PATH_PARAMS) build $(DOCKER_COMPOSE_SERVICE)
+	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) build $(DOCKER_COMPOSE_SERVICE)
 
 rebuild:
 	# force a rebuild by passing --no-cache
-	docker-compose $(DOCKER_COMPOSE_PATH_PARAMS) build --no-cache $(DOCKER_COMPOSE_SERVICE)
+	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) build --no-cache $(DOCKER_COMPOSE_SERVICE)
 
 service:
-	docker-compose $(DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) up $(SERVICE_TARGET)
+	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) up $(SERVICE_TARGET)
 
 stop:
-	docker-compose $(DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) stop
+	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) stop
 
 login:
 	docker exec -it $(DOCKER_CONTAINER) /bin/bash
@@ -43,4 +44,7 @@ login_as_root:
 	docker exec -u root -w / -it $(DOCKER_CONTAINER) /bin/bash
 
 ps:
-	docker-compose $(DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) ps
+	docker-compose $(DEV_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME) ps
+
+test_inside_docker:
+	docker-compose $(TEST_DOCKER_COMPOSE_PATH_PARAMS) -p $(PROJECT_NAME)_test up $(SERVICE_TARGET)
