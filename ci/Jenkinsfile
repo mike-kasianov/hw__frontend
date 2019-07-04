@@ -1,0 +1,17 @@
+node {
+    checkout scm
+    
+    stage('Build Docker image') {
+        sh 'make build'
+    }
+
+    stage('Run tests') {
+        sh 'make test'
+    }
+
+    post {
+        always {
+            sh 'make cleanup'
+        }
+    }
+}
