@@ -1,17 +1,18 @@
 pipeline {
     agent any
+
     stages {
         stage('Test') {
             steps {
                 sh 'make build'
-                sh 'make test'
+                sh 'make unit_test'
             }
         }
-
-        post { 
-            always { 
-                sh 'make cleanup'
-            }
+    }
+    
+    post { 
+        always { 
+            sh 'make cleanup'
         }
     }
 }
