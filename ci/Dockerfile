@@ -4,8 +4,8 @@ USER appuser
 
 COPY --chown=appuser:appuser . /home/appuser/frontend
 
-RUN chmod +x /home/appuser/frontend/ci/entrypoint.sh
+RUN chmod +x /home/appuser/frontend/ci/get-deps.sh
 
 WORKDIR /home/appuser/frontend
 
-CMD ["ci/entrypoint.sh"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
